@@ -15,11 +15,13 @@ io.on("connection", (socket) => {
     console.log("User connected:", socket.id)
 socket.on("send-location", (data) => {
     console.log("Location received:", data)
+    socket.broadcast.emit("receive-location", {id: socket.id, ...data})
 })
     socket.on("disconnect", () => {
         console.log("User disconnected:", socket.id)
     })
 })
+
 app.get("/",(_,res)=>{
     res.send("Server is running")
 })
