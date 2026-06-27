@@ -19,6 +19,8 @@ socket.on("send-location", (data) => {
 })
     socket.on("disconnect", () => {
         console.log("User disconnected:", socket.id)
+        socket.broadcast.emit("user-disconnected", socket.id)
+
     })
 })
 
@@ -26,6 +28,6 @@ app.get("/",(_,res)=>{
     res.send("Server is running")
 })
 
-server.listen(3000, () => {
-    console.log("Server running on port 3000")
-})
+server.listen(3000, "0.0.0.0", () => {
+  console.log("Server running on port 3000");
+});

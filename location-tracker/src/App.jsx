@@ -13,8 +13,12 @@ L.Icon.Default.mergeOptions({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
 });
-  const socket = io('http://localhost:3000');
+const userIcon = L.icon({
+  iconUrl: "https://img.icons8.com/color/48/region-code.png",
 
+ 
+});
+const socket = io("http://10.254.67.208:3000");
 function FollowCamera({ position }) {
   const map = useMap();
   useEffect(() => {
@@ -57,6 +61,11 @@ function App() {
    
   )
 })
+socket.on("user-disconnected", (id) => {
+  setUsers((prevUsers) =>
+    prevUsers.filter((user) => user.id !== id)
+  );
+});
   }, []);
 
   return (
@@ -86,6 +95,8 @@ function App() {
       </Marker>
     )
   ))}
+  <Marker position={postion} icon={userIcon} >  
+<Popup>{socket.id}</Popup></Marker>
 </MapContainer>
 
 
